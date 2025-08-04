@@ -1,0 +1,691 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse de S3942_piscine_Piscine_d_hiver_de_Vaise.md</title>
+    
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                min-height: 100vh;
+            }
+            
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            
+            header {
+                text-align: center;
+                margin-bottom: 30px;
+                background: white;
+                padding: 30px;
+                border-radius: 15px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            }
+            
+            h1 {
+                color: #2c3e50;
+                font-size: 2.5em;
+                margin-bottom: 10px;
+                font-weight: 300;
+            }
+            
+            .subtitle {
+                color: #7f8c8d;
+                font-size: 1.1em;
+            }
+            
+            .legend {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                width: 320px;
+                max-height: 70vh;
+                overflow-y: auto;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                padding: 20px;
+                border-radius: 15px;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                z-index: 1000;
+                transition: all 0.3s ease;
+            }
+            
+            .legend:hover {
+                background: rgba(255, 255, 255, 0.98);
+                box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+                transform: translateY(-2px);
+            }
+            
+            .legend::before {
+                content: '';
+                position: absolute;
+                top: -2px;
+                left: -2px;
+                right: -2px;
+                bottom: -2px;
+                background: linear-gradient(45deg, rgba(66, 165, 245, 0.3), rgba(156, 39, 176, 0.3), rgba(244, 67, 54, 0.3));
+                border-radius: 17px;
+                z-index: -1;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            
+            .legend:hover::before {
+                opacity: 1;
+            }
+            
+            /* Scrollbar personnalisée pour la légende */
+            .legend::-webkit-scrollbar {
+                width: 6px;
+            }
+            
+            .legend::-webkit-scrollbar-track {
+                background: rgba(0,0,0,0.1);
+                border-radius: 3px;
+            }
+            
+            .legend::-webkit-scrollbar-thumb {
+                background: rgba(0,0,0,0.3);
+                border-radius: 3px;
+            }
+            
+            .legend::-webkit-scrollbar-thumb:hover {
+                background: rgba(0,0,0,0.5);
+            }
+            
+            .legend h2 {
+                color: #2c3e50;
+                margin-bottom: 20px;
+                font-size: 1.5em;
+                font-weight: 400;
+            }
+            
+            .legend-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 15px;
+            }
+            
+            .legend-item {
+                display: flex;
+                align-items: center;
+                padding: 12px;
+                border-radius: 8px;
+                transition: transform 0.2s ease;
+            }
+            
+            .legend-item:hover {
+                transform: translateY(-2px);
+            }
+            
+            .legend-color {
+                width: 20px;
+                height: 20px;
+                border-radius: 4px;
+                margin-right: 12px;
+                flex-shrink: 0;
+            }
+            
+            .legend-text {
+                flex-grow: 1;
+            }
+            
+            .legend-name {
+                font-weight: 600;
+                color: #2c3e50;
+            }
+            
+            .legend-stats {
+                font-size: 0.9em;
+                color: #7f8c8d;
+            }
+            
+            .content {
+                background: white;
+                padding: 30px;
+                padding-right: 360px; /* Espace pour la légende flottante */
+                border-radius: 15px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+                font-size: 1.1em;
+                line-height: 1.8;
+            }
+            
+            .chunk {
+                padding: 4px 8px;
+                margin: 2px;
+                border-radius: 6px;
+                transition: all 0.3s ease;
+                cursor: help;
+                display: inline;
+            }
+            
+            .confidence-high {
+                opacity: 1;
+                font-weight: 500;
+            }
+            
+            .confidence-medium {
+                opacity: 0.8;
+            }
+            
+            .confidence-low {
+                opacity: 0.6;
+                font-style: italic;
+            }
+            
+            
+            .theme-lundi {
+                background-color: #cc515120;
+                border-left: 3px solid #cc5151;
+            }
+            .theme-lundi:hover {
+                background-color: #cc515140;
+                box-shadow: 0 2px 8px #cc515130;
+            }
+            .theme-lyon {
+                background-color: #95e54420;
+                border-left: 3px solid #95e544;
+            }
+            .theme-lyon:hover {
+                background-color: #95e54440;
+                box-shadow: 0 2px 8px #95e54430;
+            }
+            .theme-cookies {
+                background-color: #28cccc20;
+                border-left: 3px solid #28cccc;
+            }
+            .theme-cookies:hover {
+                background-color: #28cccc40;
+                box-shadow: 0 2px 8px #28cccc30;
+            }
+            .theme-ville {
+                background-color: #a05be520;
+                border-left: 3px solid #a05be5;
+            }
+            .theme-ville:hover {
+                background-color: #a05be540;
+                box-shadow: 0 2px 8px #a05be530;
+            }
+            
+            footer {
+                text-align: center;
+                margin-top: 30px;
+                color: #7f8c8d;
+                font-size: 0.9em;
+            }
+            
+            @media (max-width: 768px) {
+                .container {
+                    padding: 10px;
+                }
+                
+                h1 {
+                    font-size: 2em;
+                }
+                
+                .legend {
+                    position: relative;
+                    width: 100%;
+                    max-height: none;
+                    margin-bottom: 20px;
+                    right: 0;
+                    top: 0;
+                }
+                
+                .content {
+                    padding-right: 30px;
+                }
+            }
+            
+            @media (max-width: 1400px) {
+                .legend {
+                    width: 280px;
+                }
+                
+                .content {
+                    padding-right: 320px;
+                }
+            }
+            
+            /* Animation d'entrée pour la légende */
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            .legend {
+                animation: slideInRight 0.6s ease-out;
+            }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Analyse de S3942_piscine_Piscine_d_hiver_de_Vaise.md</h1>
+            <p class="subtitle">Analyse automatique des thématiques</p>
+        </header>
+        
+        
+        <div class="legend">
+            <h2>📊 Répartition thématique</h2>
+            <div class="legend-grid">
+                
+            <div class="legend-item theme-cookies">
+                <div class="legend-color" style="background-color: #28cccc;"></div>
+                <div class="legend-text">
+                    <div class="legend-name">Cookies</div>
+                    <div class="legend-stats">
+                        37.5% du texte • 
+                        3 segments • 
+                        Confiance: 0.47
+                    </div>
+                </div>
+            </div>
+            <div class="legend-item theme-lundi">
+                <div class="legend-color" style="background-color: #cc5151;"></div>
+                <div class="legend-text">
+                    <div class="legend-name">Lundi</div>
+                    <div class="legend-stats">
+                        25.0% du texte • 
+                        2 segments • 
+                        Confiance: 0.61
+                    </div>
+                </div>
+            </div>
+            <div class="legend-item theme-lyon">
+                <div class="legend-color" style="background-color: #95e544;"></div>
+                <div class="legend-text">
+                    <div class="legend-name">Lyon</div>
+                    <div class="legend-stats">
+                        25.0% du texte • 
+                        2 segments • 
+                        Confiance: 0.39
+                    </div>
+                </div>
+            </div>
+            <div class="legend-item theme-ville">
+                <div class="legend-color" style="background-color: #a05be5;"></div>
+                <div class="legend-text">
+                    <div class="legend-name">Ville</div>
+                    <div class="legend-stats">
+                        12.5% du texte • 
+                        1 segments • 
+                        Confiance: 0.37
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+        <main class="content">
+            
+            <span class="chunk theme-ville confidence-low" 
+                  title="Thème: Ville (Confiance: 0.37)">
+                Piscine de Vaise | Ville de Lyon
+
+ Aller au contenu principal
+
+ Menu principal
+
+ Démarches
+
+ Sortir et découvrir
+
+ Vie pratique
+
+ Actions et projets
+
+ Arrondissements mobile
+
+ Arrondissement
+
+ 1er
+ 2e
+ 3e
+ 4e
+ 5e
+ 6e
+ 7e
+ 8e
+ 9e
+
+ Rechercher
+
+ Arrondissement
+
+ 1er
+ 2e
+ 3e
+ 4e
+ 5e
+ 6e
+ 7e
+ 8e
+ 9e
+
+Accéder à mon espace
+
+ Démarches
+
+ Sortir et découvrir
+
+ Vie pratique
+
+ Actions et projets
+
+ Arrondissements mobile
+
+ Arrondissement
+
+ 1er
+ 2e
+ 3e
+ 4e
+ 5e
+ 6e
+ 7e
+ 8e
+ 9e
+
+ Accueil
+
+ Equipements
+
+ Piscine de Vaise
+
+ Fermeture exceptionnelle
+
+ A partir du lundi 3 juin 2024 : piscine fermée pour travaux jusqu’à la mi -septembre 2025 .
+
+ Visuel principal
+
+ Informations générales
+
+Le site de réservation est disponible sur : h ttps://www.piscines -patinoires.lyon.fr/
+ Ces réservations sont possibles avec les cartes d&#39;abonnement existantes et/ou avec achat d&#39;entrées unitaires (e -billet).
+ Le port du masque est recommandé mais non obligatoire.
+Grand bassin : 50m x 21m / profondeur minimum 1,80m
+Accès aux personnes en situation de handicap.
+
+ Horaires
+
+ Bassins 25 et 50 mètres
+ Horaires susceptibles d&#39;être modifiés en fonction des occupations exceptionnelles
+ Evacuation des bassins 1/4 heure avant l&#39;heure de fermeture
+ Grand bassin
+ Hors vacances scolaires
+            </span>
+            <span class="chunk theme-lundi confidence-high" 
+                  title="Thème: Lundi (Confiance: 0.79)">
+                Lundi : 12h -16h (50m) / 16h -21h (25m)
+ Mardi : 12h -13h45 (50m) / 17h -21h (25m)
+ Mercredi : 7h -8h30 (50m) - 12h -14h00 (50m) - 17h -20h (50m)
+ Jeudi : 12h -13h45 (50m) / 17h -20h (25 m)
+ Vendredi : 7h -8h30 (50m) et 12h -13h45 (50m) / 17h -20h (25 m)
+ Samedi : 10h -17h (50m)
+ Dimanche : 9h -12h45 (50m)
+
+ Vacances scolaires
+
+ Lundi : 12h -21h (50m)
+ Mardi : 12h -21h (50m)
+ Mercredi : 12h -20h (50m)
+ Jeudi : 12h -20h (50m)
+ Vendredi : 12h -20h (50m)
+ Samedi : 10h -17h (50m)
+ Dimanche : 9h -12h45 (50m)
+
+ Bassin enfants
+ Horaires susceptibles d&#39;être modifiés en fonction des occupations exceptionnelles
+ Bassin enfants
+ Hors vacances scolaires
+
+ Lundi : 17h -20h
+ Mardi : 17h -20h
+ Mercredi : 17h -19h30
+ Jeudi : 17h -19h30
+ Vendredi : 17h -19h30
+ Samedi : 10h -12h et 14h -16h30
+ Dimanche : 9h -12h15
+
+ Vacances scolaires
+
+ Du lundi au vendredi : 14h -18h
+ Samedi : 10h -12h et 14h -16h30
+ Dimanche : 9h -12h15
+
+ Horaires plongeoirs
+ Hors Vacances scolaires
+
+ Samedi : 14h -16h30
+ Dimanche : 10h -12h15
+
+ Vacances scolaires
+            </span>
+            <span class="chunk theme-lundi confidence-medium" 
+                  title="Thème: Lundi (Confiance: 0.43)">
+                Lundi au vendredi : 14h -16h
+ Samedi : 14h -16h30
+ Dimanche : 10h -12h15
+
+ Horaires aquagym
+ Les séances d’aquagym se déroulent dans le grand bassin
+
+ Lundi : 14h -14h45
+ Lundi : 15h -15h45
+ Mardi : 12h15 -13h
+ Jeudi : 12h15 -13h
+
+ Tarifs
+
+ Se munir d&#39;une pièce d&#39;1 € ou d&#39;un jeton
+ Entrées unitaires
+ - Plein tarif : 4,00 €
+ - Tarif réduit : 2,60 € (moins de 18 ans, lycéen, étudiant de moins de 26 ans, personne en situation de handicap et son accompagnateur, titulaire du RSA)
+ - Moins de 4 ans : gratuit
+ - Aquagym : 8,50 € (entrée séance)
+ Les entrées unitaires doivent être utilisées immédiatement et ne permettent qu&#39;un seul passage.
+ Cartes abonnement
+ - 10 entrées : 32 € (entrées valables 2 ans à compter du dernier rechargement)
+ - 10 entrées aquagym : 68,50 € (entrées séances)
+ Carte à puce (achat/remplacement) : 2,50 €
+ Centres Sociaux
+Entrée : 2 € par personne
+Réservation par mail : resagroupe.vaise@mairie -lyon.fr
+ Cours particulier
+L&#39;usager doit s&#39;acquitter de son droit d&#39;entrée selon les tarifs en vigueur
+ ► Les cartes entrées des piscines municipales
+(modalités, fonctionnement et pièces justificatives pour les tarifs réduits)
+
+ Coordonnées
+
+ Adresse :
+
+ Adresse
+ 50 avenue Sidoine Apollinaire
+
+ Code postal
+ 69009
+
+ Ville
+ Lyon
+
+ Tél.
+
+ Téléphone
+ 04 72 53 11 81
+
+ Agrandir la carte
+
+ Accès
+
+ TCL:
+
+ Accès: TCL
+ Métro D Gorge de Loup - Bus 3, 19, 66 : arrêt Piscine de Vaise - www.tcl.fr
+            </span>
+            <span class="chunk theme-lyon confidence-low" 
+                  title="Thème: Lyon (Confiance: 0.34)">
+                Vélo&#39;v :
+
+ Accès: Velo&#39;v
+ www.velov.grandlyon.com
+
+ Accessibilité
+
+ Image
+
+ Handicap moteur
+
+ Et aussi
+
+ ► Toutes les piscines de Lyon
+
+ Recherche Lieux
+
+ Recherche par mots clés dans les Equipements
+
+ Valider
+
+ Rechercher
+
+ A lire aussi
+
+ Visuel principal
+
+ &quot;Ecoles été 2025&quot; : 12 familles à l&#39;abri durant les vacances
+
+ Actualité
+
+ Action sociale et solidarité
+ Publié le : 25 juillet 2025
+
+ Alors que les vacances scolaires d’été ont débuté, la Ville continue de s’assurer de la mise à l’abri prioritaire des familles et des enfants à la rue
+
+ Visuel paysage (large)
+
+ Festival du Péristyle
+
+ Du 26 juin au
+
+ Date de l’événement (fin)
+ 25 juillet 2025
+
+ Festival
+
+ Equipement
+ Opéra national de Lyon
+
+ Les soirs d’été, l’Opéra Underground vous accueille sous les arcades de l’Opéra pour des concerts gratuits.
+
+ Visuel principal
+
+ Travaux d&#39;été : &quot;adapter au changement climatique&quot;
+
+ Actualité
+
+ Patrimoine
+ Publié le : 12 juillet 2024
+
+ L&#39;adaptation de la ville au changement climatique se visualisent au travers de très nombreux chantiers. Impressionnants ou plus discrets.
+
+ Précédent
+
+ Suivant
+
+ Diapositive 1
+
+ Diapositive 2
+
+ Diapositive 3
+
+ Inscrivez -vous à nos lettres d&#39;informations
+ Restez informé des actualités de la ville de Lyon
+
+ Découvrir les newsletters
+
+ Accessibilité
+
+ Le site est partiellement conforme au référentiel général d&#39;amélioration de l&#39;accessibilité (RGAA).
+
+ En savoir
+
+ Éco -responsabilité
+
+ Ce site a été éco -conçu pour réduire son impact environnemental.
+
+ En savoir
+
+ Suivez -nous
+
+ Page Instagram de la Ville de Lyon
+
+ Page Facebook Ville de Lyon
+
+ LinkedIn de la Ville de Lyon
+
+ Logo TikTok Ville de Lyon
+
+ Page Youtube de la Ville de Lyon
+
+ Espace Presse
+            </span>
+            <span class="chunk theme-lyon confidence-medium" 
+                  title="Thème: Lyon (Confiance: 0.44)">
+                Contactez -nous !
+ 33 (0 )4 72 10 30 30
+ Mairie de Lyon
+69205 Lyon Cedex 01
+
+ Mentions légales
+ Plan du site
+ Protection des données
+ Contacter le médiateur de la Ville de Lyon
+ Politique de gestion des cookies
+ Cookies
+            </span>
+            <span class="chunk theme-cookies confidence-low" 
+                  title="Thème: Cookies (Confiance: 0.40)">
+                Fermer Paramétrer les cookies sur le site de lyon.fr Le site lyon.fr et les 9 sites d’arrondissement déposent des cookies pour vous proposer une expérience utilisateur adaptée avec un accès à des pages enrichies de contenus vidéo et réseaux sociaux. Certains Cookies permettent également d’analyser votre navigation en obtenant des statistiques de fréquentation anonymes, ceci afin d’améliorer notre site web en fonction de vos usages.
+L&#39;émission et l&#39;utilisation de cookies par des tiers sont soumises aux politiques de protection de la vie privée de ces mêmes tiers. Nous vous informons de l&#39;objet des Cookies sur nos sites et des moyens dont vous disposez pour effectuer des choix à l&#39;égard de ces derniers.
+Vous avez la possibilité d’accepter ou de refuser chacun des Cookies tiers ci -dessous. Ce choix est conservé entre 6 et 13 mois selon les cas, mais vous pouvez changer d’avis à tout moment.
+            </span>
+            <span class="chunk theme-cookies confidence-medium" 
+                  title="Thème: Cookies (Confiance: 0.42)">
+                Politique de gestion des cookies Préférences pour tous les services Tout accepter Tout refuser Cookies obligatoires Ce site utilise des cookies nécessaires à son bon fonctionnement. Ils ne peuvent pas être désactivés. Les Cookies utilisés sont ceux de Tarte au citron et du plan interactif Ville de Lyon. Si vous refuser ces cookies dans votre navigateur cela nuira au bon fonctionnement du site. Autoriser Interdire APIs Les APIs permettent de charger des scripts : géolocalisation, moteurs de recherche, traductions, ... Autre Services visant à afficher du contenu web. Commentaires Les gestionnaires de commentaires facilitent le dépôt de vos commentaires et luttent contre le spam. Mesure d&#39;audience Les services de mesure d&#39;audience permettent de générer des statistiques de fréquentation utiles à l&#39;amélioration du site. Matomo Cloud (privacy by design) autorisé - Ce service a déposé 2 cookies. Plus de détails techniques - Voir le site officiel Autoriser Interdire Régies publicitaires Les régies publicitaires permettent de générer des revenus en commercialisant les espaces publicitaires du site. Réseaux sociaux Les réseaux sociaux permettent d&#39;améliorer la convivialité du site et aident à sa promotion via les partages. Support Les services de support vous permettent d&#39;entrer en contact avec l&#39;équipe du site et d&#39;aider à son amélioration. Vidéos Les services de partage de vidéo permettent d&#39;enrichir le site de contenu multimédia et augmentent sa visibilité. Vimeo interdit - Ce service peut déposer 8 cookies. Ces Cookies permettent de vous proposer des contenus éditoriaux enrichis intégrant un lecteur vidéo.
+ Plus de détails techniques - Voir le site officiel Autoriser Interdire YouTube interdit - Ce service peut déposer 4 cookies. Ces Cookies permettent de vous proposer des contenus éditoriaux enrichis intégrant un lecteur vidéo.
+            </span>
+            <span class="chunk theme-cookies confidence-medium" 
+                  title="Thème: Cookies (Confiance: 0.60)">
+                Plus de détails techniques - Voir le site officiel Autoriser Interdire Ce site n&#39;utilise aucun cookie nécessitant votre consentement. Ce site utilise des cookies et vous donne le contrôle sur ceux que vous souhaitez activer Tout accepter Tout refuser Personnaliser Politique de gestion des cookies
+            </span>
+        </main>
+        
+        <footer>
+            <p>Généré automatiquement • 8 segments analysés • 4 thématiques identifiées</p>
+        </footer>
+    </div>
+</body>
+</html>
